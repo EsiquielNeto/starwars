@@ -5,15 +5,12 @@ plugins {
 
 apply plugin: 'io.spring.dependency-management'
 
+applicationDefaultJvmArgs = ["-Xmx128m"]
 group = 'com.project'
 version = '1.0.0'
 sourceCompatibility = '1.8'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
+mainClassName = 'com.project.starwarsapi.StarwarsApiApplication'
 
 repositories {
     mavenCentral()
@@ -23,11 +20,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.liquibase:liquibase-core'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+
+    //Flyway
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
+
+    //MySQL
+    runtime('mysql:mysql-connector-java')
 }
