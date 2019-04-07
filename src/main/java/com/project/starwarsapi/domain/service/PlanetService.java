@@ -26,8 +26,8 @@ public class PlanetService extends AbstractService<Planet, Long>{
         return Planet.class;
     }
 
-    public Planet findByStartingWith(String name) {
-        return planetRepository.findByNameStartingWith(name);
+    public Planet findByName(String name) {
+        return planetRepository.findByName(name);
     }
 
 }

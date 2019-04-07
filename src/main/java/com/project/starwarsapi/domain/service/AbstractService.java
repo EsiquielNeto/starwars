@@ -10,7 +10,6 @@ import javax.persistence.MappedSuperclass;
 public abstract class AbstractService<T, ID> implements ServiceInterface<T, ID> {
 
     abstract JpaRepository<T, ID> getRepository();
-
     abstract Class<T> getEntityClass();
 
     public Page<T> findAll(Pageable pageable) {

@@ -1,4 +1,4 @@
-package com.project.starwarsapi.controller;
+package com.project.starwarsapi.application.resources;
 
 import com.project.starwarsapi.domain.model.Planet;
 import com.project.starwarsapi.domain.service.PlanetService;
@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("starwars/planets")
-public class PlanetResource implements AbstractInterface<Planet, Long>{
+@RequestMapping("starwars")
+public class PlanetResource implements ResourceInterface<Planet, Long> {
 
     private final PlanetService planetService;
 
@@ -21,33 +23,38 @@ public class PlanetResource implements AbstractInterface<Planet, Long>{
     }
 
     @Override
-    @GetMapping
+    @GetMapping("planets")
     public ResponseEntity<Page<Planet>> findAll(Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(planetService.findAll(pageable));
     }
 
     @Override
-    @GetMapping("{id}")
-    public ResponseEntity<Planet> findById(Long id) {
+    @GetMapping("planets/{id}")
+    public ResponseEntity<Planet> findById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(planetService.findById(id));
     }
 
+    @GetMapping("planets/name/{name}")
+    public ResponseEntity<Planet> findByDescription(@PathVariable String name){
+        return ResponseEntity.status(HttpStatus.OK).body(planetService.findByName(name));
+    }
+
     @Override
-    @PostMapping
-    public ResponseEntity<Planet> create(Planet planet) {
+    @PostMapping("planets")
+    public ResponseEntity<Planet> create(@Valid @RequestBody Planet planet) {
         return ResponseEntity.status(HttpStatus.CREATED).body(planetService.create(planet));
     }
 
     @Override
-    @PutMapping("{id}")
-    public ResponseEntity<Planet> update(Planet planet) {
+    @PutMapping("planets")
+    public ResponseEntity<Planet> update(@Valid @RequestBody Planet planet) {
         planetService.existsById(planet.getId());
         return ResponseEntity.status(HttpStatus.OK).body(planetService.update(planet));
     }
 
     @Override
-    @DeleteMapping("{id}")
-    public ResponseEntity<Planet> delete(Long id) {
+    @DeleteMapping("planets/{id}")
+    public ResponseEntity<Planet> delete(@PathVariable("id") Long id) {
         planetService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }

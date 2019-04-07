@@ -24,7 +24,7 @@ dependencies {
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
     //Flyway
-    compile group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
+    compile "org.flywaydb:flyway-core:5.2.4"
 
     //MySQL
     runtime('mysql:mysql-connector-java')

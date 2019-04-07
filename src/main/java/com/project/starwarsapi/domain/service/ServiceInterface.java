@@ -9,8 +9,6 @@ public interface ServiceInterface<T, ID> {
 
     T findById(ID id);
 
-    T findByStartingWith(String description);
-
     T create(T model);
 
     T update(T model);

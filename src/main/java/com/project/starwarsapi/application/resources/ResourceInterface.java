@@ -1,10 +1,10 @@
-package com.project.starwarsapi.controller;
+package com.project.starwarsapi.application.resources;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-public interface AbstractInterface<T, ID> {
+public interface ResourceInterface<T, ID> {
 
     ResponseEntity<Page<T>>findAll(Pageable pageable);
 
