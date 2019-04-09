@@ -28,6 +28,9 @@ public class Planet implements Serializable {
     @NotNull
     @Column(name = "terrain")
     private String terrain;
+    
+    @Column(name = "films")
+    private int films;
 
     public Long getId() {
         return id;
@@ -61,19 +64,52 @@ public class Planet implements Serializable {
         this.terrain = terrain;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Planet planet = (Planet) o;
-        return Objects.equals(id, planet.id) &&
-                Objects.equals(name, planet.name) &&
-                Objects.equals(climate, planet.climate) &&
-                Objects.equals(terrain, planet.terrain);
+    public int getFilms() {
+        return films;
+    }
+
+    public void setFilms(int films) {
+        this.films = films;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, climate, terrain);
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.id);
+        hash = 43 * hash + Objects.hashCode(this.name);
+        hash = 43 * hash + Objects.hashCode(this.climate);
+        hash = 43 * hash + Objects.hashCode(this.terrain);
+        hash = 43 * hash + this.films;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Planet other = (Planet) obj;
+        if (this.films != other.films) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.climate, other.climate)) {
+            return false;
+        }
+        if (!Objects.equals(this.terrain, other.terrain)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 }
