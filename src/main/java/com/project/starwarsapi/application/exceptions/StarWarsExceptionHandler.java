@@ -4,6 +4,8 @@ import com.project.starwarsapi.config.MessageLocaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +51,7 @@ public class StarWarsExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ IllegalArgumentException.class })
     public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
-        String userMessage = messageSource.getMessage("invalid.id", null, LocaleContextHolder.getLocale());
+        String userMessage = messageSource.getMessage("planet.notFound", null, LocaleContextHolder.getLocale());
         String developerMessage = ex.toString();
         List<Error> erros = Arrays.asList(new Error(userMessage, developerMessage));
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);

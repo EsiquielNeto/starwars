@@ -1,7 +1,6 @@
 package com.project.starwarsapi.application.resources;
 
 import com.project.starwarsapi.domain.model.Planet;
-import com.project.starwarsapi.domain.model.PlanetDTO;
 import com.project.starwarsapi.domain.model.PlanetPage;
 import com.project.starwarsapi.domain.service.PlanetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class PlanetResource implements ResourceInterface<Planet, Long> {
     @Override
     @GetMapping("planets")
     public ResponseEntity<Page<Planet>> findAll(Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(planetService.findAll(pageable));
+        return new ResponseEntity<>(planetService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping
@@ -41,7 +40,7 @@ public class PlanetResource implements ResourceInterface<Planet, Long> {
             String url = "https://swapi.co/api/planets/?page=" + (pageable != null && pageable.getPageNumber() != 0 ? Integer.toString(pageable.getPageNumber()) : "1");
             dto = restTemplate.getForEntity(url, PlanetPage.class);
         } catch (HttpClientErrorException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            e.printStackTrace();
         }
 
         return new ResponseEntity<>(dto.getBody(), HttpStatus.OK);
@@ -50,12 +49,12 @@ public class PlanetResource implements ResourceInterface<Planet, Long> {
     @Override
     @GetMapping("planets/{id}")
     public ResponseEntity<Planet> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(planetService.findById(id));
+        return new ResponseEntity<>(planetService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("planets/name/{name}")
     public ResponseEntity<Planet> findByDescription(@PathVariable String name) {
-        return ResponseEntity.status(HttpStatus.OK).body(planetService.findByName(name));
+        return new ResponseEntity<>(planetService.findByName(name), HttpStatus.OK);
     }
 
     @Override
@@ -66,23 +65,15 @@ public class PlanetResource implements ResourceInterface<Planet, Long> {
     }
 
     @Override
-    @PutMapping("planets")
-    public ResponseEntity<Planet> update(@Valid @RequestBody Planet planet) {
-        planetService.existsById(planet.getId());
-        planet.setFilms(numberAppearancesFilm(planet.getName()));
-        return ResponseEntity.status(HttpStatus.OK).body(planetService.update(planet));
-    }
-
-    @Override
     @DeleteMapping("planets/{id}")
     public ResponseEntity<Planet> delete(@PathVariable("id") Long id) {
         planetService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private int numberAppearancesFilm(String name) {
         RestTemplate restTemplate = new RestTemplate();
-        PlanetPage planet = new PlanetPage();
+        PlanetPage planet = null;
         try {
             String url = "https://swapi.co/api/planets/?search=";
             planet = restTemplate.getForObject(url + name, PlanetPage.class);

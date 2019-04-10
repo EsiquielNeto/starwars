@@ -5,5 +5,3 @@ CREATE TABLE planet (
   terrain VARCHAR (255) NOT NULL,
   films   INT(4)         NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-insert into planet (name, climate, terrain, films) values ('Alderaan', 'temperate', 'grasslands, mountains', 2)

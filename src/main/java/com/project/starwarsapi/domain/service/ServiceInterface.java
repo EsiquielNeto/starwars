@@ -11,8 +11,6 @@ public interface ServiceInterface<T, ID> {
 
     T create(T model);
 
-    T update(T model);
-
     void delete(ID id);
 
     void existsById(ID id);

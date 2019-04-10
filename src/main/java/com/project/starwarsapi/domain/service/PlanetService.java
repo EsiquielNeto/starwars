@@ -27,7 +27,14 @@ public class PlanetService extends AbstractService<Planet, Long>{
     }
 
     public Planet findByName(String name) {
+        this.existsByName(name);
         return planetRepository.findByName(name);
+    }
+
+    private void existsByName(String name) {
+        if(!planetRepository.existsByName(name)) {
+            throw new IllegalArgumentException();
+        }
     }
 
 }

@@ -12,7 +12,5 @@ public interface ResourceInterface<T, ID> {
 
     ResponseEntity<T> create(T model);
 
-    ResponseEntity<T> update(T model);
-
     ResponseEntity<T> delete(ID id);
 }

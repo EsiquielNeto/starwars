@@ -29,11 +29,6 @@ public abstract class AbstractService<T, ID> implements ServiceInterface<T, ID> 
     }
 
     @Override
-    public T update(T model) {
-        return getRepository().save(model);
-    }
-
-    @Override
     public void delete(ID id) {
         this.existsById(id);
         getRepository().deleteById(id);

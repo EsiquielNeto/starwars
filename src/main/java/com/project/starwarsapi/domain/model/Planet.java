@@ -3,6 +3,7 @@ package com.project.starwarsapi.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,15 +18,15 @@ public class Planet implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
+    @NotBlank
     @Column(name = "name")
     private String name;
 
-    @NotNull
+    @NotBlank
     @Column(name = "climate")
     private String climate;
 
-    @NotNull
+    @NotBlank
     @Column(name = "terrain")
     private String terrain;
     
